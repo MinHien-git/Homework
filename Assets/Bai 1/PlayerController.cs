@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private bool isDashing = false;
     private Camera mainCamera;
     public float projectileSpeed = 20f;
-
+    public Slider slider;
     void Start()
     {
         mainCamera = Camera.main;
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("ShootPoint not assigned!");
         if (weaponObjects.Length != 2)
             Debug.LogError("Exactly 2 weapon objects must be assigned!");
-
+        slider.value = health;
         currentAmmo = new int[2] { weaponAmmo[0], weaponAmmo[1] };
         UpdateWeaponObjects();
     }
@@ -181,13 +181,16 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
         if (health <= 0)
             Debug.Log("Player defeated!");
+        else
+            health -= damage;
+        slider.value = health;
     }
 
     public void AddHealth(float amount)
     {
         health = Mathf.Min(health + amount, 100f);
+        slider.value = health;
     }
 }

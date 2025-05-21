@@ -68,9 +68,14 @@ public class MonsterAI : MonoBehaviour
 
     bool MeleeAttack()
     {
-        Debug.Log("Monster does melee attack!");
-        player.GetComponent<PlayerController>().TakeDamage(meleeDamage);
-        return true;
+        if (shootTimer <= 0)
+        {
+            Debug.Log("Monster does melee attack!");
+            player.GetComponent<PlayerController>().TakeDamage(meleeDamage);
+            shootTimer = shootCooldown;
+            return true;
+        }
+        return false;
     }
 
     bool RangedAttack()
